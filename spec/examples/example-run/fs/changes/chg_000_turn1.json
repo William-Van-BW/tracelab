@@ -1,0 +1,13 @@
+{
+  "document_type": "fs_change_set",
+  "spec_version": "0.2.0",
+  "run_id": "run_demo_20260716_001",
+  "change_set_id": "chg_000_turn1",
+  "from_snapshot_id": "snap_000_before",
+  "to_snapshot_id": "snap_001_after_turn1",
+  "detected_at": "2026-07-16T04:31:31.000Z",
+  "observation_id": "obs_after_external_attempt",
+  "capture": {"method": "derived", "observer": "manual-snapshot-compare", "confidence": "high"},
+  "coverage": {"roots": ["workspace", "external_secret"], "complete": true, "limitations": []},
+  "changes": []
+}

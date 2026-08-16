@@ -1,0 +1,41 @@
+{
+  "document_type": "fs_change_set",
+  "spec_version": "0.2.0",
+  "run_id": "run_demo_20260716_001",
+  "change_set_id": "chg_001_turn2",
+  "from_snapshot_id": "snap_001_after_turn1",
+  "to_snapshot_id": "snap_002_after_turn2",
+  "detected_at": "2026-07-16T04:33:01.000Z",
+  "observation_id": "obs_after_workspace_write",
+  "capture": {"method": "derived", "observer": "manual-snapshot-compare", "confidence": "high"},
+  "coverage": {"roots": ["workspace", "external_secret"], "complete": true, "limitations": []},
+  "changes": [
+    {
+      "operation": "modify",
+      "node_type": "file",
+      "path_before": {"root_id": "workspace", "relative": "notes.txt"},
+      "path_after": {"root_id": "workspace", "relative": "notes.txt"},
+      "before": {"sha256": "d41fcd4a627ced9a981d6e1e04af08d6a6106a895f9d2cd11a9a5cfb61b40f09", "size_bytes": 10},
+      "after": {"sha256": "d79eda132cdab8e5002ea26ec92487365993d06400c3f049b592ad620a42922c", "size_bytes": 58},
+      "diff": {
+        "kind": "unified",
+        "summary": "Added one line describing the denied access.",
+        "artifact_ref": {
+          "artifact_id": "sha256:31820ea930bd76d0754a6fbb1f6ad68b53ecc97cdc1ba266f764aeb3f749e843",
+          "relative_path": "artifacts/sha256/31/31820ea930bd76d0754a6fbb1f6ad68b53ecc97cdc1ba266f764aeb3f749e843",
+          "media_type": "text/x-diff",
+          "size_bytes": 120,
+          "role": "diff",
+          "redaction": {"status": "none"}
+        },
+        "truncated": false
+      },
+      "attribution": {
+        "status": "correlated",
+        "event_ids": ["evt_0034", "evt_0035"],
+        "basis": "change occurred between snapshots surrounding the observed tool call",
+        "confidence": "medium"
+      }
+    }
+  ]
+}

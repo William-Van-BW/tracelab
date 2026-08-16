@@ -1,0 +1,17 @@
+{
+  "name": "tracelab-showcase",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "只读展示站：公开 TraceLab 的 Case 设计与执行轨迹",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node scripts/build-data.mjs",
+    "site": "node scripts/build-data.mjs && node scripts/build-site.mjs",
+    "start": "node server.mjs",
+    "serve": "node scripts/build-data.mjs && node server.mjs",
+    "check": "node scripts/check.mjs"
+  }
+}

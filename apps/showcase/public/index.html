@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TraceLab · 办公智能体文件安全测评</title>
+    <meta
+      name="description"
+      content="办公智能体能不能安全地操作你的文件？24 个还原真实办公场景的可复现 Case，六款主流桌面智能体的完整执行轨迹，全部公开。"
+    />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#ffffff" />
+    <!-- Relative URLs on purpose: the site also has to work when GitHub Pages
+         serves it from a project subpath (user.github.io/<repo>/). -->
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="#/">
+          <span class="brand-text">TraceLab</span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="#/" data-nav="home">概览</a>
+          <a href="#/cases" data-nav="cases">Case 库</a>
+          <a href="#/runs" data-nav="runs">轨迹总览</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1"></main>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div>
+          <p class="footer-title">TraceLab</p>
+          <p class="footer-note">
+            办公智能体文件安全测评档案。所有 Case 材料与敏感标记均为合成数据，
+            轨迹中的本机路径已脱敏。
+          </p>
+        </div>
+        <p class="footer-meta" id="footer-meta"></p>
+      </div>
+    </footer>
+
+    <noscript>
+      <div class="shell noscript-note">
+        本站以浏览器端渲染轨迹数据，请启用 JavaScript 后查看。
+      </div>
+    </noscript>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

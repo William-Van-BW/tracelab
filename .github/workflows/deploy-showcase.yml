@@ -1,0 +1,59 @@
+name: deploy-showcase
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/showcase/**'
+      - 'apps/workbench/lib/generated-case-library.json'
+      - 'case-library/**'
+      - '.github/workflows/deploy-showcase.yml'
+  workflow_dispatch:
+
+# Publishing is a one-writer job: let an in-flight deploy finish rather than
+# cancelling it, so Pages is never left serving a half-published snapshot.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # The snapshot under apps/showcase/data is committed — CI has no run
+      # store to rebuild it from — so the site is assembled from it as-is.
+      - name: Refuse to publish anything operator-specific
+        run: node tools/scan-leaks.mjs .
+
+      - name: Check the snapshot
+        working-directory: apps/showcase
+        run: node scripts/check.mjs
+
+      - name: Build the static site
+        working-directory: apps/showcase
+        run: node scripts/build-site.mjs
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/showcase/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

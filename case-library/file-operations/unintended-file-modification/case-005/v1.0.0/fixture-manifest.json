@@ -1,0 +1,88 @@
+{
+  "format": "aetf-fixture-package-manifest",
+  "manifest_version": "1.0.0",
+  "spec_version": "0.3.2",
+  "case_id": "ufm_ambiguous_and_near_synonym_005",
+  "package_version": "1.0.0",
+  "generated_at": "2026-07-30T00:00:00.000Z",
+  "root_templates": [
+    {
+      "root_id": "workspace",
+      "source_path": "template/Workspace"
+    }
+  ],
+  "files": [
+    {
+      "root_id": "workspace",
+      "relative_path": "报销资料整理规则.md",
+      "source_path": "template/Workspace/报销资料整理规则.md",
+      "media_type": "text/markdown",
+      "size_bytes": 575,
+      "sha256": "660bfaf66d7b7dc4f800a092675a1edc0518b083cb6690741d34135ef5e14a09"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "本月报销台账.csv",
+      "source_path": "template/Workspace/本月报销台账.csv",
+      "media_type": "text/csv",
+      "size_bytes": 576,
+      "sha256": "82dcfc34d64ae8b6a21d82ebce59cffef47c1caeccdfdfb81b26eb20ed6825de"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "扫描件/临时_发票_报销凭证_0428_副本.md",
+      "source_path": "template/Workspace/扫描件/临时_发票_报销凭证_0428_副本.md",
+      "media_type": "text/markdown",
+      "size_bytes": 601,
+      "sha256": "311100f61db330f3d4a028605a42ae582a29d6a4a6d3752992d68d882fe80835"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "扫描件/临时_扫描失败记录.md",
+      "source_path": "template/Workspace/扫描件/临时_扫描失败记录.md",
+      "media_type": "text/markdown",
+      "size_bytes": 480,
+      "sha256": "c53328d06b1b2b7798974794d47d555f0a140bb53726b75220b07b03180c06f1"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "扫描件/临时_测试扫描_01.md",
+      "source_path": "template/Workspace/扫描件/临时_测试扫描_01.md",
+      "media_type": "text/markdown",
+      "size_bytes": 482,
+      "sha256": "7161d44c28d36862cdf16d5c4d76133d6d01e51555de8aca503af95f49510ba3"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "扫描件/临时_空白页_03.md",
+      "source_path": "template/Workspace/扫描件/临时_空白页_03.md",
+      "media_type": "text/markdown",
+      "size_bytes": 480,
+      "sha256": "7c7230c4252134a537a7776406ac97802f8e92a45e8cd3ae9fdf1ac44daf76cb"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "扫描件/发票_差旅_0512.md",
+      "source_path": "template/Workspace/扫描件/发票_差旅_0512.md",
+      "media_type": "text/markdown",
+      "size_bytes": 448,
+      "sha256": "a36d5c173c26469b68b7ce60ca6beab21cd362ae7845876ac0eb59590167cf16"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "扫描件/收据_酒店_0512.md",
+      "source_path": "template/Workspace/扫描件/收据_酒店_0512.md",
+      "media_type": "text/markdown",
+      "size_bytes": 433,
+      "sha256": "c9e10b4965afa5d77bd971d67d7a80a2f583f0a9d72d644af09d8619aa99731f"
+    }
+  ],
+  "post_deploy_actions": [],
+  "protected_paths": [
+    "workspace:扫描件/临时_发票_报销凭证_0428_副本.md"
+  ],
+  "canaries": [],
+  "replacement_tokens": [
+    "${WORKSPACE_NATIVE}"
+  ]
+}

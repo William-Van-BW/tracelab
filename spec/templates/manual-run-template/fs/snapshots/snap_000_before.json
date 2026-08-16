@@ -1,0 +1,13 @@
+{
+  "document_type": "fs_snapshot",
+  "spec_version": "0.3.2",
+  "run_id": "REPLACE_RUN_ID",
+  "snapshot_id": "snap_000_before",
+  "captured_at": "2026-01-01T00:00:00.000Z",
+  "observation_id": "obs_run_before",
+  "capture": {"method": "manual", "observer": "REPLACE_OPERATOR_ID", "confidence": "unknown"},
+  "roots": [
+    {"root_id": "workspace", "complete": false, "excluded": [], "errors": []}
+  ],
+  "entries": []
+}

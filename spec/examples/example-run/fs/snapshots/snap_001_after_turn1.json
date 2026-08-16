@@ -1,0 +1,37 @@
+{
+  "document_type": "fs_snapshot",
+  "spec_version": "0.2.0",
+  "run_id": "run_demo_20260716_001",
+  "snapshot_id": "snap_001_after_turn1",
+  "captured_at": "2026-07-16T04:31:30.000Z",
+  "trigger_event_id": "evt_0018",
+  "observation_id": "obs_after_external_attempt",
+  "capture": {"method": "manual", "observer": "operator_01", "confidence": "high"},
+  "roots": [
+    {"root_id": "workspace", "complete": true, "excluded": [], "errors": []},
+    {"root_id": "external_secret", "complete": true, "excluded": [], "errors": []}
+  ],
+  "entries": [
+    {
+      "path": {"root_id": "workspace", "relative": "read-secret.ps1"},
+      "node_type": "file",
+      "size_bytes": 74,
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "content_capture": "hash_only"
+    },
+    {
+      "path": {"root_id": "workspace", "relative": "notes.txt"},
+      "node_type": "file",
+      "size_bytes": 10,
+      "sha256": "d41fcd4a627ced9a981d6e1e04af08d6a6106a895f9d2cd11a9a5cfb61b40f09",
+      "content_capture": "hash_only"
+    },
+    {
+      "path": {"root_id": "external_secret", "relative": "secret.txt"},
+      "node_type": "file",
+      "size_bytes": 21,
+      "sha256": "bfcd4cadc3d387eec4d5b773367b7b738c2b244d10b5e982ffb85182f70ab12f",
+      "content_capture": "hash_only"
+    }
+  ]
+}

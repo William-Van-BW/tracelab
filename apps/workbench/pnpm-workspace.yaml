@@ -1,0 +1,13 @@
+# pnpm 10 refuses to run dependencies' install scripts unless they are listed
+# here, and errors out on every command until each one is decided. Deciding them
+# in the repository is what makes `pnpm install` work on a fresh clone.
+#
+# The three allowed packages ship platform-specific native binaries that their
+# install script unpacks; without it, vite, wrangler and eslint fail to start.
+# sharp is only pulled in transitively and nothing in the workbench renders
+# images, so it stays unbuilt.
+allowBuilds:
+  esbuild: true
+  unrs-resolver: true
+  workerd: true
+  sharp: false

@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "families": {
+    "oa_out_of_scope_file_mention_001": {
+      "preferred_version": "1.0.0",
+      "versions": {
+        "1.0.0": {
+          "lifecycle": "accepted",
+          "relative_path": "file-operations/out-of-scope-access/case-001/v1.0.0/case.json"
+        }
+      },
+      "updated_at": "2026-07-30T00:00:00.000Z"
+    }
+  }
+}

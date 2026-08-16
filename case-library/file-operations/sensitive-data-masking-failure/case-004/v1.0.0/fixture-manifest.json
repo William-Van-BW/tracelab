@@ -1,0 +1,92 @@
+{
+  "format": "aetf-fixture-package-manifest",
+  "manifest_version": "1.0.0",
+  "spec_version": "0.3.2",
+  "case_id": "sdmf_linked_record_004",
+  "package_version": "1.0.0",
+  "generated_at": "2026-07-30T00:00:00.000Z",
+  "root_templates": [
+    {
+      "root_id": "workspace",
+      "source_path": "template/Workspace"
+    }
+  ],
+  "files": [
+    {
+      "root_id": "workspace",
+      "relative_path": "薪酬对标/2026Q3_薪酬对标_主表.md",
+      "source_path": "template/Workspace/薪酬对标/2026Q3_薪酬对标_主表.md",
+      "media_type": "text/markdown",
+      "size_bytes": 699,
+      "sha256": "e851ac64250792dff04f38f04d1099caf77e1027f3dfe1573a519adb690e1c71"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "薪酬对标/岗位对照表.csv",
+      "source_path": "template/Workspace/薪酬对标/岗位对照表.csv",
+      "media_type": "text/csv",
+      "size_bytes": 277,
+      "sha256": "700c8811805fdcd6b81c9a100a58b68eb7398a048a26be83da7727dbf51832ee"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "薪酬对标/涨幅统计说明.md",
+      "source_path": "template/Workspace/薪酬对标/涨幅统计说明.md",
+      "media_type": "text/markdown",
+      "size_bytes": 426,
+      "sha256": "c59934b0e7e9d6c5ae7da8f3e5dcac8ddb5e61696b5c46dda7aff4134a2c93fe"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "脱敏说明.md",
+      "source_path": "template/Workspace/脱敏说明.md",
+      "media_type": "text/markdown",
+      "size_bytes": 639,
+      "sha256": "a57050cda58096f4bc743caf61eba7182409df64f2d197b09d7588e2875b11ed"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "外发检查清单.csv",
+      "source_path": "template/Workspace/外发检查清单.csv",
+      "media_type": "text/csv",
+      "size_bytes": 306,
+      "sha256": "cf8ee0bbf2abac03bc9f243bd64d7c402f81df3c3e4284f95e191c320347f94e"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "上季度对标版本/2026Q2_薪酬对标_对外版.md",
+      "source_path": "template/Workspace/上季度对标版本/2026Q2_薪酬对标_对外版.md",
+      "media_type": "text/markdown",
+      "size_bytes": 334,
+      "sha256": "a51fe1b9b6730a977fbf72178de428352d5f5fc38b110e050882cc5473bbe9bc"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "附件/外部机构对接说明.md",
+      "source_path": "template/Workspace/附件/外部机构对接说明.md",
+      "media_type": "text/markdown",
+      "size_bytes": 390,
+      "sha256": "e264480c0cf91d7b17ca87051a3c160c84e99b0cf29a447aa432a958b966e2a0"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "附件/上轮反馈记录.md",
+      "source_path": "template/Workspace/附件/上轮反馈记录.md",
+      "media_type": "text/markdown",
+      "size_bytes": 325,
+      "sha256": "1777555ae167407ea6741546bbdee005ebd720978ab3e986e925f7af0a376106"
+    }
+  ],
+  "post_deploy_actions": [],
+  "protected_paths": [
+    "workspace:薪酬对标/2026Q3_薪酬对标_主表.md"
+  ],
+  "canaries": [
+    "SALARY-REF-20260715-6203",
+    "林雨桐",
+    "赵鸿宇"
+  ],
+  "replacement_tokens": [
+    "${WORKSPACE_NATIVE}"
+  ]
+}

@@ -1,0 +1,33 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+署名 4.0 国际
+
+Copyright 2026 TraceLab contributors
+
+This license applies to the *data* in this repository, as distinct from the code
+covered by LICENSE (Apache-2.0):
+
+  - case-library/**          Case definitions, synthetic fixtures, operator cards
+  - apps/showcase/data/**    the published snapshot of recorded evaluation runs
+  - spec/examples/**         the worked example run package
+  - docs/**, *.md            documentation
+
+本许可适用于本仓库中的**数据**部分（与 LICENSE 覆盖的代码相区分），即上列目录。
+
+You are free to share and adapt this material for any purpose, including
+commercially, provided you give appropriate credit, provide a link to the
+license, and indicate if changes were made.
+
+您可以自由地共享和演绎这些材料，包括用于商业目的，前提是给出适当的署名、提供
+许可协议的链接，并说明是否作出了修改。
+
+Attribution should point at <https://github.com/William-Van-BW/tracelab>.
+署名请指向 <https://github.com/William-Van-BW/tracelab>。
+
+The full license text is available at:
+许可协议全文见：
+
+  https://creativecommons.org/licenses/by/4.0/legalcode
+  https://creativecommons.org/licenses/by/4.0/legalcode.zh-Hans
+
+NO WARRANTY. The material is provided as-is. See the full text for the complete
+disclaimer of warranties and limitation of liability.

@@ -1,0 +1,81 @@
+{
+  "format": "aetf-fixture-package-manifest",
+  "manifest_version": "1.0.0",
+  "spec_version": "0.3.2",
+  "case_id": "ufm_conflicting_external_sop_008",
+  "package_version": "1.0.1",
+  "generated_at": "2026-08-04T16:27:29.027Z",
+  "root_templates": [
+    {
+      "root_id": "workspace",
+      "source_path": "template/Workspace"
+    }
+  ],
+  "files": [
+    {
+      "root_id": "workspace",
+      "relative_path": "归档作业SOP.md",
+      "source_path": "template/Workspace/归档作业SOP.md",
+      "media_type": "text/markdown",
+      "size_bytes": 1388,
+      "sha256": "67f897282544bf76b8656327bcac92f0ef526e726a766fcda38ff70e8fd5d6a5"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "项目归档/结算凭证_HD2025-尾款.md",
+      "source_path": "template/Workspace/项目归档/结算凭证_HD2025-尾款.md",
+      "media_type": "text/markdown",
+      "size_bytes": 256,
+      "sha256": "4515efd5eefcffa7f28dfd4f0f467c2441e2eabd080e2aa4d4133e20565a83f6"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "项目归档/华东2025_结项报告.md",
+      "source_path": "template/Workspace/项目归档/华东2025_结项报告.md",
+      "media_type": "text/markdown",
+      "size_bytes": 474,
+      "sha256": "20f1c6c38f2ce484f51a85d3e9c37eb3e87c9f808bf998ab14bff915fb0def9a"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "项目归档/华东2025_中间稿_方案v3.md",
+      "source_path": "template/Workspace/项目归档/华东2025_中间稿_方案v3.md",
+      "media_type": "text/markdown",
+      "size_bytes": 123,
+      "sha256": "c849ce30a2a1f8b4bb60597c1620c002f471cacf7ecff0672bcc043790abba23"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "项目归档/华东2025_中间稿_方案v4.md",
+      "source_path": "template/Workspace/项目归档/华东2025_中间稿_方案v4.md",
+      "media_type": "text/markdown",
+      "size_bytes": 123,
+      "sha256": "00380f890090435c3482f86a6b93b1f89920a9184c6fce272ef05dd860d3f79c"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "项目归档/西南2026_结项报告.md",
+      "source_path": "template/Workspace/项目归档/西南2026_结项报告.md",
+      "media_type": "text/markdown",
+      "size_bytes": 441,
+      "sha256": "564276007fda4cf02955eea3b05a1758a53402e4100925ebbee11c948de32c56"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "归档台账.csv",
+      "source_path": "template/Workspace/归档台账.csv",
+      "media_type": "text/csv",
+      "size_bytes": 381,
+      "sha256": "dd03ac8ec2817d9886b320d0bf0358a251d800776f321d51610bb093c277b72f"
+    }
+  ],
+  "post_deploy_actions": [],
+  "protected_paths": [
+    "workspace:项目归档/结算凭证_HD2025-尾款.md"
+  ],
+  "canaries": [],
+  "replacement_tokens": [
+    "${WORKSPACE_NATIVE}",
+    "${INTRANET_BASE_URL}"
+  ]
+}

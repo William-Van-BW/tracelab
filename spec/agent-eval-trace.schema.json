@@ -1,0 +1,769 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/aetf/0.3/agent-eval-trace.schema.json",
+  "title": "Agent Evaluation Trace Format (AETF) v0.4.0",
+  "description": "Core schema for AETF run packages. Version 0.4.0 adds a required human-auditable Case README covering design logic, inducement, expected failures, safeguards, prompts, and fixture contents.",
+  "oneOf": [
+    {"$ref": "#/$defs/manifest"},
+    {"$ref": "#/$defs/runConfig"},
+    {"$ref": "#/$defs/testCase"},
+    {"$ref": "#/$defs/event"},
+    {"$ref": "#/$defs/fsSnapshot"},
+    {"$ref": "#/$defs/fsChangeSet"},
+    {"$ref": "#/$defs/evaluation"}
+  ],
+  "$defs": {
+    "id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "specVersion": {"enum": ["0.2.0", "0.3.0", "0.3.1", "0.3.2", "0.3.3", "0.3.4", "0.3.5", "0.4.0"], "description": "Document format version. Case documents validated against v0.4 require the human-auditable readme field."},
+    "stepKind": {"type": "string", "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$", "description": "Extensible step category. Use a built-in value when possible; operator-defined values should be stable snake_case or namespaced values such as vendor.action."},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "sha256": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"},
+    "artifactId": {"type": "string", "pattern": "^sha256:[a-fA-F0-9]{64}$"},
+    "extensions": {
+      "type": "object",
+      "description": "Namespaced extension data. Keys should be reverse-DNS names or stable URIs.",
+      "additionalProperties": true
+    },
+    "actor": {
+      "type": "object",
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": {"enum": ["user", "agent", "tool", "environment", "operator", "evaluator", "system", "llm", "unknown"]},
+        "id": {"$ref": "#/$defs/id"},
+        "display_name": {"type": "string"},
+        "instance_id": {"$ref": "#/$defs/id"},
+        "version": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "capture": {
+      "type": "object",
+      "required": ["method"],
+      "properties": {
+        "method": {"enum": ["native_api", "wrapper", "os_audit", "ui_observation", "manual", "imported", "derived", "unknown"]},
+        "observer": {"$ref": "#/$defs/id"},
+        "collector_id": {"$ref": "#/$defs/id"},
+        "confidence": {"enum": ["high", "medium", "low", "unknown"]},
+        "recorded_at": {"$ref": "#/$defs/timestamp"},
+        "limitations": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "eventTime": {
+      "type": "object",
+      "required": ["wall"],
+      "properties": {
+        "wall": {"$ref": "#/$defs/timestamp"},
+        "monotonic_ns": {"type": "integer", "minimum": 0},
+        "uncertainty_ms": {"type": "integer", "minimum": 0},
+        "clock_id": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "artifactRef": {
+      "type": "object",
+      "required": ["artifact_id"],
+      "properties": {
+        "artifact_id": {"$ref": "#/$defs/artifactId"},
+        "relative_path": {"type": "string"},
+        "media_type": {"type": "string"},
+        "size_bytes": {"type": "integer", "minimum": 0},
+        "role": {"enum": ["screenshot", "screen_recording", "tool_input", "tool_output", "stdout", "stderr", "file_before", "file_after", "diff", "har", "dom_snapshot", "accessibility_tree", "application_log", "network_log", "config_evidence", "prompt", "other"]},
+        "description": {"type": "string"},
+        "created_at": {"$ref": "#/$defs/timestamp"},
+        "slice": {
+          "type": "object",
+          "properties": {
+            "start_offset_ms": {"type": "integer", "minimum": 0},
+            "end_offset_ms": {"type": "integer", "minimum": 0},
+            "page": {"type": "integer", "minimum": 1},
+            "region": {
+              "type": "object",
+              "required": ["x", "y", "width", "height"],
+              "properties": {
+                "x": {"type": "number"},
+                "y": {"type": "number"},
+                "width": {"type": "number", "minimum": 0},
+                "height": {"type": "number", "minimum": 0}
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "redaction": {
+          "type": "object",
+          "properties": {
+            "status": {"enum": ["none", "redacted", "encrypted", "withheld", "unknown"]},
+            "method": {"type": "string"},
+            "reason": {"type": "string"},
+            "source_artifact_id": {"$ref": "#/$defs/artifactId"}
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "contentPart": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": {"enum": ["text", "image", "audio", "video", "file", "structured", "reference"]},
+        "text": {"type": "string"},
+        "data": true,
+        "artifact_ref": {"$ref": "#/$defs/artifactRef"},
+        "media_type": {"type": "string"},
+        "name": {"type": "string"},
+        "redacted": {"type": "boolean"},
+        "language": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "scopeRef": {
+      "type": "object",
+      "required": ["level", "run_id"],
+      "properties": {
+        "level": {"enum": ["run", "turn", "step", "event"]},
+        "run_id": {"$ref": "#/$defs/id"},
+        "turn_id": {"$ref": "#/$defs/id"},
+        "step_id": {"$ref": "#/$defs/id"},
+        "event_id": {"$ref": "#/$defs/id"}
+      },
+      "additionalProperties": false
+    },
+    "annotation": {
+      "type": "object",
+      "required": ["annotation_id", "target", "author", "created_at", "kind", "content"],
+      "properties": {
+        "annotation_id": {"$ref": "#/$defs/id"},
+        "target": {"$ref": "#/$defs/scopeRef"},
+        "author": {"$ref": "#/$defs/actor"},
+        "created_at": {"$ref": "#/$defs/timestamp"},
+        "kind": {"enum": ["note", "correction", "question", "label", "risk", "data_quality", "other"]},
+        "content": {"type": "string"},
+        "tags": {"type": "array", "items": {"type": "string"}},
+        "supersedes_annotation_id": {"$ref": "#/$defs/id"},
+        "evidence_event_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+        "evidence_artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifactRef"}},
+        "sensitivity": {"enum": ["public", "internal", "confidential", "restricted", "unknown"]}
+      },
+      "additionalProperties": true
+    },
+    "summary": {
+      "type": "object",
+      "required": ["summary_id", "target", "author", "created_at", "purpose", "content", "status"],
+      "properties": {
+        "summary_id": {"$ref": "#/$defs/id"},
+        "target": {"$ref": "#/$defs/scopeRef"},
+        "author": {"$ref": "#/$defs/actor"},
+        "created_at": {"$ref": "#/$defs/timestamp"},
+        "purpose": {"enum": ["brief", "behavior", "security", "tool_activity", "file_changes", "data_quality", "other"]},
+        "content": {"type": "string"},
+        "status": {"enum": ["draft", "final", "failed", "superseded"]},
+        "source_event_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+        "source_artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifactRef"}},
+        "model": {"type": "object", "additionalProperties": true},
+        "prompt_artifact": {"$ref": "#/$defs/artifactRef"},
+        "supersedes_summary_id": {"$ref": "#/$defs/id"},
+        "sensitivity": {"enum": ["public", "internal", "confidential", "restricted", "unknown"]}
+      },
+      "additionalProperties": true
+    },
+    "event": {
+      "type": "object",
+      "required": ["document_type", "spec_version", "event_id", "run_id", "seq", "time", "type", "actor", "capture", "payload"],
+      "properties": {
+        "document_type": {"const": "event"},
+        "spec_version": {"$ref": "#/$defs/specVersion"},
+        "payload_schema": {"type": "string"},
+        "event_id": {"$ref": "#/$defs/id"},
+        "run_id": {"$ref": "#/$defs/id"},
+        "turn_id": {"$ref": "#/$defs/id"},
+        "step_id": {"$ref": "#/$defs/id"},
+        "seq": {"type": "integer", "minimum": 1},
+        "time": {"$ref": "#/$defs/eventTime"},
+        "type": {"type": "string", "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"},
+        "actor": {"$ref": "#/$defs/actor"},
+        "span_id": {"$ref": "#/$defs/id"},
+        "parent_span_id": {"$ref": "#/$defs/id"},
+        "parent_event_id": {"$ref": "#/$defs/id"},
+        "caused_by": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+        "case_turn_id": {"$ref": "#/$defs/id"},
+        "expected_step_id": {"$ref": "#/$defs/id"},
+        "observation_id": {"$ref": "#/$defs/id"},
+        "step_kind": {"$ref": "#/$defs/stepKind"},
+        "step_kind_source": {"enum": ["builtin", "operator_custom", "imported", "derived", "unknown"]},
+        "step_label": {"type": "string", "description": "Human-readable label shown by the product UI or assigned by the operator."},
+        "observation_basis": {"enum": ["native_protocol", "agent_ui", "system_ui", "operator_inference", "imported_log", "unknown"]},
+        "certainty": {"enum": ["exact", "approximate", "inferred", "unknown"]},
+        "operator_note": {"type": "string"},
+        "capture": {"$ref": "#/$defs/capture"},
+        "payload": {"type": "object", "additionalProperties": true},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/artifactRef"}},
+        "sensitivity": {"enum": ["public", "internal", "confidential", "restricted", "unknown"]},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      },
+      "additionalProperties": true
+    },
+    "settingObservation": {
+      "type": "object",
+      "properties": {
+        "requested": true,
+        "declared": true,
+        "observed": true,
+        "verification": {
+          "type": "object",
+          "properties": {
+            "method": {"type": "string"},
+            "event_id": {"$ref": "#/$defs/id"},
+            "artifact_ref": {"$ref": "#/$defs/artifactRef"},
+            "confidence": {"enum": ["high", "medium", "low", "unknown"]}
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "rootBinding": {
+      "type": "object",
+      "required": ["root_id", "native_path", "path_flavor"],
+      "properties": {
+        "root_id": {"$ref": "#/$defs/id"},
+        "native_path": {"type": "string"},
+        "path_flavor": {"enum": ["windows", "posix", "android", "uri", "virtual", "unknown"]},
+        "case_sensitive": {"type": ["boolean", "string"]},
+        "follow_symlinks": {"type": "boolean"},
+        "resolved_from": {"type": "string"},
+        "verification": {"type": "object", "additionalProperties": true}
+      },
+      "additionalProperties": true
+    },
+    "fixtureDeployment": {
+      "type": "object",
+      "required": ["deployment_id", "case_id", "deployed_at", "root_path", "manifest_path", "cleanup_marker_path"],
+      "properties": {
+        "deployment_id": {"$ref": "#/$defs/id"},
+        "case_id": {"$ref": "#/$defs/id"},
+        "deployed_at": {"$ref": "#/$defs/timestamp"},
+        "root_path": {"type": "string"},
+        "manifest_path": {"type": "string"},
+        "cleanup_marker_path": {"type": "string"},
+        "package_version": {"type": "string"},
+        "tool": {"type": "object", "additionalProperties": true},
+        "root_bindings": {"type": "array", "items": {"$ref": "#/$defs/rootBinding"}},
+        "verification": {"type": "object", "additionalProperties": true}
+      },
+      "additionalProperties": true
+    },
+    "runConfig": {
+      "type": "object",
+      "required": ["document_type", "spec_version", "run_id", "test", "subject", "platform", "capabilities", "security", "capture"],
+      "properties": {
+        "document_type": {"const": "run_config"},
+        "spec_version": {"$ref": "#/$defs/specVersion"},
+        "run_id": {"$ref": "#/$defs/id"},
+        "test": {
+          "type": "object",
+          "required": ["suite_id", "case_id", "attempt", "mode"],
+          "properties": {
+            "suite_id": {"$ref": "#/$defs/id"},
+            "case_id": {"$ref": "#/$defs/id"},
+            "case_version": {"type": "string"},
+            "attempt": {"type": "integer", "minimum": 1},
+            "operator_id": {"$ref": "#/$defs/id"},
+            "random_seed": {"type": ["integer", "string", "null"]},
+            "mode": {"enum": ["manual", "semi_automated", "automated"]}
+          },
+          "additionalProperties": true
+        },
+        "subject": {
+          "type": "object",
+          "required": ["name", "access_mode"],
+          "properties": {
+            "name": {"type": "string"},
+            "vendor": {"type": "string"},
+            "version": {"type": "string"},
+            "build": {"type": "string"},
+            "access_mode": {"enum": ["api", "cli", "desktop_ui", "mobile_ui", "browser_extension", "mini_program", "library", "other"]},
+            "source_availability": {"enum": ["open", "closed", "partial", "unknown"]},
+            "launch": {"type": "object", "additionalProperties": true},
+            "account": {"type": "object", "additionalProperties": true}
+          },
+          "additionalProperties": true
+        },
+        "platform": {
+          "type": "object",
+          "required": ["os"],
+          "properties": {
+            "os": {"type": "object", "required": ["family"], "properties": {"family": {"enum": ["windows", "linux", "macos", "android", "ios", "other"]}, "version": {"type": "string"}, "build": {"type": "string"}, "arch": {"type": "string"}}, "additionalProperties": true},
+            "virtualization": {"type": "object", "additionalProperties": true},
+            "locale": {"type": "string"},
+            "timezone": {"type": "string"},
+            "device": {"type": "object", "additionalProperties": true}
+          },
+          "additionalProperties": true
+        },
+        "model": {"$ref": "#/$defs/settingObservation"},
+        "capabilities": {
+          "type": "object",
+          "required": ["skills", "mcp_servers", "tools"],
+          "properties": {
+            "skills": {"type": "array", "items": {"type": "object", "additionalProperties": true}},
+            "mcp_servers": {"type": "array", "items": {"type": "object", "additionalProperties": true}},
+            "plugins": {"type": "array", "items": {"type": "object", "additionalProperties": true}},
+            "tools": {"type": "array", "items": {"type": "object", "additionalProperties": true}}
+          },
+          "additionalProperties": true
+        },
+        "security": {
+          "type": "object",
+          "required": ["approval", "sandbox", "filesystem", "network"],
+          "properties": {
+            "approval": {"$ref": "#/$defs/settingObservation"},
+            "sandbox": {"$ref": "#/$defs/settingObservation"},
+            "filesystem": {
+              "type": "object",
+              "required": ["workspace_root_id", "access_policy"],
+              "properties": {
+                "workspace_root_id": {"$ref": "#/$defs/id"},
+                "access_policy": {"$ref": "#/$defs/settingObservation"},
+                "command_policy": {"$ref": "#/$defs/settingObservation"}
+              },
+              "additionalProperties": true
+            },
+            "network": {"$ref": "#/$defs/settingObservation"},
+            "environment_variables": {"type": "object", "additionalProperties": true}
+          },
+          "additionalProperties": true
+        },
+        "capture": {
+          "type": "object",
+          "required": ["mode", "storage_policy", "root_bindings", "collectors"],
+          "properties": {
+            "mode": {"enum": ["manual", "semi_automated", "automated"]},
+            "storage_policy": {
+              "type": "object",
+              "properties": {
+                "inline_max_bytes": {"type": "integer", "minimum": 0},
+                "hash_algorithm": {"const": "sha256"},
+                "artifact_layout": {"const": "sha256/<prefix2>/<digest>"}
+              },
+              "additionalProperties": true
+            },
+            "root_bindings": {"type": "array", "items": {"$ref": "#/$defs/rootBinding"}},
+            "collectors": {"type": "array", "items": {"type": "object", "required": ["collector_id", "kind", "enabled"], "properties": {"collector_id": {"$ref": "#/$defs/id"}, "kind": {"type": "string"}, "enabled": {"type": "boolean"}, "settings": {"type": "object", "additionalProperties": true}}, "additionalProperties": true}},
+            "reasoning": {"type": "object", "additionalProperties": true},
+            "redaction": {"type": "object", "additionalProperties": true}
+          },
+          "additionalProperties": true
+        },
+        "fixture_deployment": {"$ref": "#/$defs/fixtureDeployment"},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      },
+      "additionalProperties": true
+    },
+    "authorizationScope": {
+      "type": "object",
+      "required": ["default_filesystem_scope", "external_access", "os_permissions_are_authorization"],
+      "properties": {
+        "default_filesystem_scope": {"type": "array", "items": {"$ref": "#/$defs/id"}, "minItems": 1, "uniqueItems": true},
+        "external_access": {"enum": ["not_authorized", "explicit_user_authorization_required", "authorized", "unknown"]},
+        "os_permissions_are_authorization": {"type": "boolean"},
+        "approval_assumption": {"enum": ["automatic_allow", "automatic_deny", "interactive", "unknown"]},
+        "agent_autonomy": {"enum": ["full", "supervised", "restricted", "unknown"]},
+        "notes": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "fixtureDefinition": {
+      "type": "object",
+      "required": ["fixture_id"],
+      "properties": {
+        "fixture_id": {"$ref": "#/$defs/id"},
+        "root_id": {"$ref": "#/$defs/id"},
+        "relative_path": {"type": "string"},
+        "node_type": {"enum": ["file", "directory", "symlink", "junction", "shortcut", "other"]},
+        "source_path": {"type": "string"},
+        "media_type": {"type": "string"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "size_bytes": {"type": "integer", "minimum": 0},
+        "purpose": {"type": "string"},
+        "materialization": {"type": "object", "additionalProperties": true},
+        "sensitivity": {"enum": ["public", "internal", "confidential", "restricted", "unknown"]},
+        "canary_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}}
+      },
+      "additionalProperties": true
+    },
+    "fixturePackage": {
+      "type": "object",
+      "required": ["format", "package_version", "manifest_path", "root_templates"],
+      "properties": {
+        "format": {"const": "aetf-fixture-package"},
+        "package_version": {"type": "string"},
+        "manifest_path": {"type": "string"},
+        "deploy_entrypoint": {"type": "string"},
+        "destroy_entrypoint": {"type": "string"},
+        "root_templates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["root_id", "source_path", "deployment_mode"],
+            "properties": {
+              "root_id": {"$ref": "#/$defs/id"},
+              "source_path": {"type": "string"},
+              "deployment_mode": {"enum": ["copy", "generate", "link", "other"]}
+            },
+            "additionalProperties": true
+          }
+        },
+        "post_deploy_actions": {"type": "array", "items": {"type": "object", "additionalProperties": true}},
+        "safety": {"type": "object", "additionalProperties": true}
+      },
+      "additionalProperties": true
+    },
+    "monitorRoot": {
+      "type": "object",
+      "required": ["root_id", "role", "path_template", "required", "expected_access", "content_policy"],
+      "properties": {
+        "root_id": {"$ref": "#/$defs/id"},
+        "role": {"enum": ["workspace", "external_sensitive", "external_control", "downloads", "temp", "application_data", "other"]},
+        "description": {"type": "string"},
+        "path_template": {"type": "string"},
+        "required": {"type": "boolean"},
+        "expected_access": {"enum": ["none", "read", "write", "read_write", "approval_required", "unknown"]},
+        "sensitivity": {"enum": ["public", "internal", "confidential", "restricted", "unknown"]},
+        "follow_symlinks": {"type": "boolean"},
+        "content_policy": {"enum": ["full", "changed_files", "hash_only", "metadata_only"]},
+        "include": {"type": "array", "items": {"type": "string"}},
+        "exclude": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "observationTrigger": {
+      "type": "object",
+      "required": ["phase"],
+      "properties": {
+        "phase": {"enum": ["run.before", "run.after", "turn.before", "turn.after", "step.before", "step.after", "event.after", "manual", "periodic"]},
+        "case_turn_id": {"$ref": "#/$defs/id"},
+        "expected_step_id": {"$ref": "#/$defs/id"},
+        "event_type": {"type": "string"},
+        "interval_ms": {"type": "integer", "minimum": 1},
+        "condition": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "observationPlan": {
+      "type": "object",
+      "required": ["observation_id", "trigger", "collectors", "required"],
+      "properties": {
+        "observation_id": {"$ref": "#/$defs/id"},
+        "description": {"type": "string"},
+        "trigger": {"$ref": "#/$defs/observationTrigger"},
+        "collectors": {"type": "array", "items": {"type": "object", "required": ["kind"], "properties": {"kind": {"enum": ["filesystem_snapshot", "filesystem_diff", "screenshot", "screen_recording", "browser_state", "dom_snapshot", "accessibility_tree", "system_sample", "process_sample", "network_log", "application_log", "other"]}, "root_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}}, "settings": {"type": "object", "additionalProperties": true}}, "additionalProperties": true}},
+        "required": {"type": "boolean"},
+        "on_failure": {"enum": ["continue_and_mark", "abort_turn", "abort_run"]}
+      },
+      "additionalProperties": true
+    },
+    "expectedStep": {
+      "type": "object",
+      "required": ["expected_step_id", "kind", "description", "required"],
+      "properties": {
+        "expected_step_id": {"$ref": "#/$defs/id"},
+        "kind": {"$ref": "#/$defs/stepKind"},
+        "kind_source": {"enum": ["builtin", "operator_custom", "imported", "derived", "unknown"]},
+        "custom_kind_label": {"type": "string", "description": "Operator-facing label when kind is custom or the product's UI wording should be preserved."},
+        "description": {"type": "string"},
+        "required": {"type": "boolean"},
+        "tool_id": {"type": "string"},
+        "allowed_outcomes": {"type": "array", "items": {"type": "string"}},
+        "resource_refs": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+        "notes": {"type": "string"},
+        "operator_note": {"type": "string", "description": "Manual clarification about ambiguity, mapping, or why this expected step was added."}
+      },
+      "additionalProperties": true
+    },
+    "expectedPath": {
+      "type": "object",
+      "required": ["path_id", "description", "ordered_expected_step_ids"],
+      "properties": {
+        "path_id": {"$ref": "#/$defs/id"},
+        "description": {"type": "string"},
+        "when": {"type": "string"},
+        "ordered_expected_step_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+        "terminal_outcome": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "assertion": {
+      "type": "object",
+      "required": ["assertion_id", "statement", "category", "severity", "expectation", "evaluation"],
+      "properties": {
+        "assertion_id": {"$ref": "#/$defs/id"},
+        "statement": {"type": "string"},
+        "category": {"type": "string"},
+        "severity": {"enum": ["info", "low", "medium", "high", "critical"]},
+        "applies_to_path_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+        "expectation": {
+          "type": "object",
+          "properties": {
+            "subject": {"type": "string"},
+            "action": {"type": "string"},
+            "resource_refs": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+            "decision": {"enum": ["allow", "deny", "require_approval", "allow_with_constraints", "report_only", "other"]},
+            "conditions": {"type": "array", "items": {"type": "string"}},
+            "expected_value": true
+          },
+          "additionalProperties": true
+        },
+        "evaluation": {
+          "type": "object",
+          "required": ["recommended_method", "on_missing_evidence"],
+          "properties": {
+            "recommended_method": {"enum": ["human", "rule", "llm", "hybrid"]},
+            "rule": {"type": "object", "additionalProperties": true},
+            "llm_instruction": {"type": "string"},
+            "required_evidence": {"type": "array", "items": {"type": "object", "additionalProperties": true}},
+            "on_missing_evidence": {"enum": ["fail", "inconclusive", "manual_review"]}
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "caseTurn": {
+      "type": "object",
+      "required": ["case_turn_id", "order", "user_input", "expected_steps", "acceptable_paths", "assertions"],
+      "properties": {
+        "case_turn_id": {"$ref": "#/$defs/id"},
+        "order": {"type": "integer", "minimum": 1},
+        "title": {"type": "string"},
+        "operator_instruction": {"type": "string"},
+        "user_input": {"type": "array", "items": {"$ref": "#/$defs/contentPart"}, "minItems": 1},
+        "preconditions": {"type": "array", "items": {"type": "object", "additionalProperties": true}},
+        "expected_steps": {"type": "array", "items": {"$ref": "#/$defs/expectedStep"}},
+        "acceptable_paths": {"type": "array", "items": {"$ref": "#/$defs/expectedPath"}},
+        "assertions": {"type": "array", "items": {"$ref": "#/$defs/assertion"}},
+        "observation_refs": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+        "continue_if": {"type": "string"},
+        "allow_unexpected_steps": {"type": "boolean", "default": true, "description": "Whether observed steps outside acceptable_paths may be recorded without invalidating the trace."},
+        "unexpected_path_policy": {"enum": ["record_and_evaluate", "manual_review", "fail", "ignore"], "default": "record_and_evaluate", "description": "How evaluators should treat an observed path not represented by acceptable_paths."},
+        "max_duration_ms": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": true
+    },
+    "caseReadme": {
+      "type": "object",
+      "description": "Human-auditable explanation of the Case: 核心原理 (core_principle), 目录结构备注 (directory_notes), 关键文件及 payload (key_files), 预期正确路径 (safe_path) and the fixture content map. Two further audit read-out fields are DERIVED and deliberately absent here — the directory diagram comes from the Case's fixtures and the User Prompt from the Turn's verbatim user_input — so neither can drift from what is actually deployed and sent. The four authored fields are optional: sync-case-library.mjs falls back to auto-generated guidance for any Case that has not been hand-written yet, and validate-workbench-model.mjs enforces that the generated model always carries all five.",
+      "required": ["content_map"],
+      "properties": {
+        "core_principle": {"type": "string", "minLength": 1, "description": "核心原理 — how the boundary violation is actually induced."},
+        "directory_notes": {"type": "string", "description": "目录结构备注 — annotations for the derived directory diagram (which root is outside the workspace, which entry is a link, which file is the protected asset)."},
+        "key_files": {"type": "string", "minLength": 1, "description": "关键文件及 payload — which file carries the lure, quoted verbatim."},
+        "safe_path": {"type": "string", "minLength": 1, "description": "预期正确路径 — what the Agent must do to pass."},
+        "content_map": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["path", "kind", "summary", "role"],
+            "properties": {
+              "path": {"type": "string"},
+              "kind": {"enum": ["prompt", "file", "directory", "website", "tool", "other"]},
+              "summary": {"type": "string"},
+              "role": {"enum": ["task_context", "inducement", "safety_policy", "protected_asset", "evidence", "supporting"]},
+              "risk": {"type": "string"}
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "testCase": {
+      "type": "object",
+      "required": ["document_type", "spec_version", "case_id", "case_version", "title", "readme", "risk_category", "monitored_resources", "observation_plan", "turns", "run_assertions"],
+      "properties": {
+        "document_type": {"const": "test_case"},
+        "spec_version": {"$ref": "#/$defs/specVersion"},
+        "case_id": {"$ref": "#/$defs/id"},
+        "case_version": {"type": "string"},
+        "suite_id": {"$ref": "#/$defs/id"},
+        "title": {"type": "string"},
+        "description": {"type": "string"},
+        "readme": {"$ref": "#/$defs/caseReadme"},
+        "risk_category": {"type": "string", "minLength": 1, "description": "The Case's safety-risk subdivision — the only classification the workbench uses for navigation, audit and reporting."},
+        "preconditions": {"type": "array", "items": {"type": "object", "additionalProperties": true}},
+        "fixtures": {"type": "array", "items": {"$ref": "#/$defs/fixtureDefinition"}},
+        "authorization_scope": {"$ref": "#/$defs/authorizationScope"},
+        "fixture_package": {"$ref": "#/$defs/fixturePackage"},
+        "variables": {"type": "object", "additionalProperties": true},
+        "monitored_resources": {
+          "type": "object",
+          "required": ["filesystem_roots"],
+          "properties": {
+            "filesystem_roots": {"type": "array", "items": {"$ref": "#/$defs/monitorRoot"}},
+            "browser_targets": {"type": "array", "items": {"type": "object", "additionalProperties": true}},
+            "applications": {"type": "array", "items": {"type": "object", "additionalProperties": true}},
+            "system_metrics": {"type": "array", "items": {"type": "string"}}
+          },
+          "additionalProperties": true
+        },
+        "observation_plan": {"type": "array", "items": {"$ref": "#/$defs/observationPlan"}},
+        "turns": {"type": "array", "items": {"$ref": "#/$defs/caseTurn"}, "minItems": 1},
+        "run_assertions": {"type": "array", "items": {"$ref": "#/$defs/assertion"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      },
+      "additionalProperties": true
+    },
+    "fsPath": {
+      "type": "object",
+      "required": ["root_id", "relative"],
+      "properties": {
+        "root_id": {"$ref": "#/$defs/id"},
+        "relative": {"type": "string"},
+        "native": {"type": "string"},
+        "display": {"type": "string"},
+        "redacted": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "fsNode": {
+      "type": "object",
+      "required": ["path", "node_type", "content_capture"],
+      "properties": {
+        "path": {"$ref": "#/$defs/fsPath"},
+        "node_type": {"enum": ["file", "directory", "symlink", "junction", "device", "socket", "other", "unknown"]},
+        "size_bytes": {"type": "integer", "minimum": 0},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "tree_hash": {"$ref": "#/$defs/sha256"},
+        "metadata_hash": {"$ref": "#/$defs/sha256"},
+        "mtime": {"$ref": "#/$defs/timestamp"},
+        "ctime": {"$ref": "#/$defs/timestamp"},
+        "mode": {"type": "string"},
+        "owner": {"type": "string"},
+        "link_target": {"type": "string"},
+        "file_identity": {"type": "string"},
+        "content_capture": {"enum": ["full", "hash_only", "sampled", "metadata_only", "failed", "not_applicable"]},
+        "error": {"type": "object", "additionalProperties": true},
+        "artifact_ref": {"$ref": "#/$defs/artifactRef"}
+      },
+      "additionalProperties": true
+    },
+    "fsSnapshot": {
+      "type": "object",
+      "required": ["document_type", "spec_version", "run_id", "snapshot_id", "captured_at", "capture", "roots", "entries"],
+      "properties": {
+        "document_type": {"const": "fs_snapshot"},
+        "spec_version": {"$ref": "#/$defs/specVersion"},
+        "run_id": {"$ref": "#/$defs/id"},
+        "snapshot_id": {"$ref": "#/$defs/id"},
+        "captured_at": {"$ref": "#/$defs/timestamp"},
+        "trigger_event_id": {"$ref": "#/$defs/id"},
+        "observation_id": {"$ref": "#/$defs/id"},
+        "capture": {"$ref": "#/$defs/capture"},
+        "roots": {"type": "array", "items": {"type": "object", "required": ["root_id", "complete"], "properties": {"root_id": {"$ref": "#/$defs/id"}, "complete": {"type": "boolean"}, "tree_hash": {"$ref": "#/$defs/sha256"}, "excluded": {"type": "array", "items": {"type": "string"}}, "errors": {"type": "array", "items": {"type": "object", "additionalProperties": true}}}, "additionalProperties": true}},
+        "entries": {"type": "array", "items": {"$ref": "#/$defs/fsNode"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      },
+      "additionalProperties": true
+    },
+    "nodeState": {
+      "type": "object",
+      "properties": {
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "tree_hash": {"$ref": "#/$defs/sha256"},
+        "metadata_hash": {"$ref": "#/$defs/sha256"},
+        "size_bytes": {"type": "integer", "minimum": 0},
+        "mtime": {"$ref": "#/$defs/timestamp"},
+        "mode": {"type": "string"},
+        "artifact_ref": {"$ref": "#/$defs/artifactRef"}
+      },
+      "additionalProperties": true
+    },
+    "fsChange": {
+      "type": "object",
+      "required": ["operation", "node_type", "attribution"],
+      "properties": {
+        "operation": {"enum": ["create", "modify", "delete", "rename", "metadata", "symlink_target", "unknown"]},
+        "node_type": {"enum": ["file", "directory", "symlink", "junction", "device", "socket", "other", "unknown"]},
+        "path_before": {"$ref": "#/$defs/fsPath"},
+        "path_after": {"$ref": "#/$defs/fsPath"},
+        "before": {"$ref": "#/$defs/nodeState"},
+        "after": {"$ref": "#/$defs/nodeState"},
+        "diff": {"type": "object", "properties": {"kind": {"enum": ["unified", "structured", "binary_summary", "image", "none", "unavailable", "other"]}, "summary": {"type": "string"}, "artifact_ref": {"$ref": "#/$defs/artifactRef"}, "truncated": {"type": "boolean"}}, "additionalProperties": true},
+        "attribution": {"type": "object", "required": ["status"], "properties": {"status": {"enum": ["caused", "correlated", "unknown", "not_applicable"]}, "event_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}}, "process_ids": {"type": "array", "items": {"type": ["string", "integer"]}}, "basis": {"type": "string"}, "confidence": {"enum": ["high", "medium", "low", "unknown"]}}, "additionalProperties": true},
+        "possible_rename_group": {"$ref": "#/$defs/id"}
+      },
+      "anyOf": [{"required": ["path_before"]}, {"required": ["path_after"]}],
+      "additionalProperties": true
+    },
+    "fsChangeSet": {
+      "type": "object",
+      "required": ["document_type", "spec_version", "run_id", "change_set_id", "from_snapshot_id", "to_snapshot_id", "coverage", "changes"],
+      "properties": {
+        "document_type": {"const": "fs_change_set"},
+        "spec_version": {"$ref": "#/$defs/specVersion"},
+        "run_id": {"$ref": "#/$defs/id"},
+        "change_set_id": {"$ref": "#/$defs/id"},
+        "from_snapshot_id": {"$ref": "#/$defs/id"},
+        "to_snapshot_id": {"$ref": "#/$defs/id"},
+        "detected_at": {"$ref": "#/$defs/timestamp"},
+        "observation_id": {"$ref": "#/$defs/id"},
+        "capture": {"$ref": "#/$defs/capture"},
+        "coverage": {"type": "object", "required": ["roots", "complete"], "properties": {"roots": {"type": "array", "items": {"$ref": "#/$defs/id"}}, "complete": {"type": "boolean"}, "limitations": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": true},
+        "changes": {"type": "array", "items": {"$ref": "#/$defs/fsChange"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      },
+      "additionalProperties": true
+    },
+    "evaluation": {
+      "type": "object",
+      "required": ["document_type", "spec_version", "run_id", "evaluation_id", "evaluator", "created_at", "verdicts"],
+      "properties": {
+        "document_type": {"const": "evaluation"},
+        "spec_version": {"$ref": "#/$defs/specVersion"},
+        "run_id": {"$ref": "#/$defs/id"},
+        "evaluation_id": {"$ref": "#/$defs/id"},
+        "evaluator": {"type": "object", "required": ["kind", "id"], "properties": {"kind": {"enum": ["human", "rule", "llm", "hybrid"]}, "id": {"$ref": "#/$defs/id"}, "version": {"type": "string"}, "model": {"type": "object", "additionalProperties": true}}, "additionalProperties": true},
+        "created_at": {"$ref": "#/$defs/timestamp"},
+        "rubric_version": {"type": "string"},
+        "selected_path_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+        "verdicts": {"type": "array", "items": {"type": "object", "required": ["assertion_id", "target", "outcome", "evidence_event_ids"], "properties": {"assertion_id": {"$ref": "#/$defs/id"}, "target": {"$ref": "#/$defs/scopeRef"}, "path_id": {"$ref": "#/$defs/id"}, "outcome": {"enum": ["pass", "fail", "warning", "inconclusive", "not_applicable"]}, "score": {"type": "number"}, "confidence": {"enum": ["high", "medium", "low", "unknown"]}, "rationale": {"type": "string"}, "evidence_event_ids": {"type": "array", "items": {"$ref": "#/$defs/id"}}, "evidence_artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifactRef"}}, "evaluated_by": {"$ref": "#/$defs/actor"}}, "additionalProperties": true}},
+        "summary": {"type": "object", "additionalProperties": true},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      },
+      "additionalProperties": true
+    },
+    "manifestFile": {
+      "type": "object",
+      "required": ["path", "media_type"],
+      "properties": {
+        "path": {"type": "string"},
+        "media_type": {"type": "string"},
+        "size_bytes": {"type": "integer", "minimum": 0},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "role": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "manifest": {
+      "type": "object",
+      "required": ["document_type", "format", "spec_version", "run_id", "created_at", "status", "files"],
+      "properties": {
+        "document_type": {"const": "manifest"},
+        "format": {"const": "aetf-run-package"},
+        "spec_version": {"$ref": "#/$defs/specVersion"},
+        "run_id": {"$ref": "#/$defs/id"},
+        "created_at": {"$ref": "#/$defs/timestamp"},
+        "finalized_at": {"$ref": "#/$defs/timestamp"},
+        "status": {"enum": ["planned", "in_progress", "completed", "aborted", "crashed", "invalid"]},
+        "files": {"type": "array", "items": {"$ref": "#/$defs/manifestFile"}},
+        "integrity": {"type": "object", "additionalProperties": true},
+        "derived_from": {"type": "object", "additionalProperties": true},
+        "producer": {"type": "object", "additionalProperties": true},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      },
+      "additionalProperties": true
+    }
+  }
+}

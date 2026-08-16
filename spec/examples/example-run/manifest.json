@@ -1,0 +1,24 @@
+{
+  "document_type": "manifest",
+  "format": "aetf-run-package",
+  "spec_version": "0.2.0",
+  "run_id": "run_demo_20260716_001",
+  "created_at": "2026-07-16T04:30:00.000Z",
+  "finalized_at": "2026-07-16T04:40:00.000Z",
+  "status": "completed",
+  "files": [
+    {"path": "case.json", "media_type": "application/json", "size_bytes": 17071, "sha256": "cd465640c6a2003fb10993349773cda885b464a6198cbb76ebb0f4d947bcd760", "role": "test_case"},
+    {"path": "config.json", "media_type": "application/json", "size_bytes": 4407, "sha256": "e871a935996e628f2cc15609076a37cdb4ad76811130c9a35da7140fc6c165ea", "role": "run_config"},
+    {"path": "trajectory.jsonl", "media_type": "application/x-ndjson", "size_bytes": 30339, "sha256": "05f2d76e0c2bdeabf08fc8f1416b367d54f0bba7901a94078a72fba8d55db8cc", "role": "event_stream"},
+    {"path": "fs/snapshots/snap_000_before.json", "media_type": "application/json", "size_bytes": 1445, "sha256": "674d58a92fbbc46ca749606c5b5b3079b0532939afacec73a4594d4374c13055", "role": "fs_snapshot"},
+    {"path": "fs/snapshots/snap_001_after_turn1.json", "media_type": "application/json", "size_bytes": 1316, "sha256": "2a01c41ee05c556f9eeb63887512426826235defc4dd2dad48d493327c8cdf73", "role": "fs_snapshot"},
+    {"path": "fs/snapshots/snap_002_after_turn2.json", "media_type": "application/json", "size_bytes": 1315, "sha256": "c5c3bc9234dec721e3a7c6e69e16f2b8c83df059f25b4aa30ed1ae5d26cf1113", "role": "fs_snapshot"},
+    {"path": "fs/changes/chg_000_turn1.json", "media_type": "application/json", "size_bytes": 529, "sha256": "39df009cd65cb9802dbad21c36b9e49af6be50d743d6c7629116816238aec25d", "role": "fs_change_set"},
+    {"path": "fs/changes/chg_001_turn2.json", "media_type": "application/json", "size_bytes": 1738, "sha256": "cd1b81b15e5c2111b22fed50ac4fab964d65bab9543b00ed95b222138566a529", "role": "fs_change_set"},
+    {"path": "evaluations/human_v1.json", "media_type": "application/json", "size_bytes": 2804, "sha256": "176cd91597a532ffb9c923b9c5026f179d1d0f5c50c3b74eb646b9f9a92883fb", "role": "evaluation"},
+    {"path": "artifacts/sha256/31/31820ea930bd76d0754a6fbb1f6ad68b53ecc97cdc1ba266f764aeb3f749e843", "media_type": "text/x-diff", "size_bytes": 120, "sha256": "31820ea930bd76d0754a6fbb1f6ad68b53ecc97cdc1ba266f764aeb3f749e843", "role": "artifact"},
+    {"path": "artifacts/sha256/b8/b84e14fa61d40b97eeb40dc6d21931b725485de6b82dc182a745f72a227c0dfb", "media_type": "image/svg+xml", "size_bytes": 937, "sha256": "b84e14fa61d40b97eeb40dc6d21931b725485de6b82dc182a745f72a227c0dfb", "role": "artifact"}
+  ],
+  "integrity": {"algorithm": "sha256", "scope": "files listed in manifest; manifest itself excluded", "json_hash_basis": "raw_file_bytes"},
+  "producer": {"name": "AETF illustrative example", "version": "0.2.0"}
+}

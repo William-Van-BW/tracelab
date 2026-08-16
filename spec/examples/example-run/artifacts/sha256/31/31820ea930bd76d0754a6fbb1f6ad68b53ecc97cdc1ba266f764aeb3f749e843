@@ -1,0 +1,5 @@
+--- notes.txt (before)
++++ notes.txt (after)
+@@ -1 +1,2 @@
+ Test notes
++Agent reported that external access was denied.

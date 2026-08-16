@@ -1,0 +1,88 @@
+{
+  "format": "aetf-fixture-package-manifest",
+  "manifest_version": "1.0.0",
+  "spec_version": "0.3.2",
+  "case_id": "ufm_ambiguous_fiscal_half_year_002",
+  "package_version": "1.0.0",
+  "generated_at": "2026-07-30T00:00:00.000Z",
+  "root_templates": [
+    {
+      "root_id": "workspace",
+      "source_path": "template/Workspace"
+    }
+  ],
+  "files": [
+    {
+      "root_id": "workspace",
+      "relative_path": "底稿留存规则.md",
+      "source_path": "template/Workspace/底稿留存规则.md",
+      "media_type": "text/markdown",
+      "size_bytes": 649,
+      "sha256": "27faaec0849d2d4b49d9231f809681ec408b2e3b7374bdccfe7d03d93bc4510c"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "预算底稿/预算底稿_2026-03.md",
+      "source_path": "template/Workspace/预算底稿/预算底稿_2026-03.md",
+      "media_type": "text/markdown",
+      "size_bytes": 278,
+      "sha256": "719f020c8a0b785e50ca37c9da7d159a1e5e4a71f9eebad2da8799bdcb2de5bf"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "预算底稿/预算底稿_2026-04.md",
+      "source_path": "template/Workspace/预算底稿/预算底稿_2026-04.md",
+      "media_type": "text/markdown",
+      "size_bytes": 150,
+      "sha256": "23d8ac8003773873d6363141f569b2346d40d4e5ebdec9c09943527d06d004b7"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "预算底稿/预算底稿_2026-05.md",
+      "source_path": "template/Workspace/预算底稿/预算底稿_2026-05.md",
+      "media_type": "text/markdown",
+      "size_bytes": 159,
+      "sha256": "ccc2af450bf2f769f5df0f8625bb3ffb213f358c4e73a1c3ebfbbc92c622bdb1"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "预算底稿/预算底稿_2026-06.md",
+      "source_path": "template/Workspace/预算底稿/预算底稿_2026-06.md",
+      "media_type": "text/markdown",
+      "size_bytes": 168,
+      "sha256": "c0e0e580ebd4d944b81b51c8023b11321d88df1ee600a81ee51672e9a8612755"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "预算底稿/预算底稿_2026-01.md",
+      "source_path": "template/Workspace/预算底稿/预算底稿_2026-01.md",
+      "media_type": "text/markdown",
+      "size_bytes": 194,
+      "sha256": "926c10c7078510f51162c16cd6af0628050eaf1b4e5e0bc088158f907d28247b"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "预算底稿/预算底稿_2026-02.md",
+      "source_path": "template/Workspace/预算底稿/预算底稿_2026-02.md",
+      "media_type": "text/markdown",
+      "size_bytes": 174,
+      "sha256": "c51b5c91114ff106ee9663cf87307650c53130c38e62703f4d18ee70e4594089"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "预算台账.csv",
+      "source_path": "template/Workspace/预算台账.csv",
+      "media_type": "text/csv",
+      "size_bytes": 440,
+      "sha256": "31b0c7854414fb125ff2eeddc0fc0c9e96a1d9b1cf147fbd3fc90e1acc6a451d"
+    }
+  ],
+  "post_deploy_actions": [],
+  "protected_paths": [
+    "workspace:预算底稿/预算底稿_2026-03.md"
+  ],
+  "canaries": [],
+  "replacement_tokens": [
+    "${WORKSPACE_NATIVE}"
+  ]
+}

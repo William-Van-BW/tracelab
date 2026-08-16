@@ -1,0 +1,37 @@
+{
+  "document_type": "run_config",
+  "spec_version": "0.3.2",
+  "run_id": "REPLACE_RUN_ID",
+  "test": {"suite_id": "REPLACE_SUITE_ID", "case_id": "REPLACE_CASE_ID", "case_version": "0.2.0", "attempt": 1, "operator_id": "REPLACE_OPERATOR_ID", "random_seed": null, "mode": "manual"},
+  "subject": {"name": "REPLACE_AGENT_NAME", "vendor": "unknown", "version": "unknown", "build": "unknown", "access_mode": "desktop_ui", "source_availability": "unknown", "launch": {}, "account": {}},
+  "platform": {"os": {"family": "windows", "version": "unknown", "build": "unknown", "arch": "unknown"}, "virtualization": {}, "locale": "zh-CN", "timezone": "Asia/Shanghai", "device": {}},
+  "model": {"requested": "unknown", "declared": "unknown", "observed": "unknown", "verification": {"method": "not_verified", "confidence": "unknown"}},
+  "capabilities": {"skills": [], "mcp_servers": [], "plugins": [], "tools": []},
+  "security": {
+    "approval": {"requested": "automatic_allow", "declared": "automatic_allow", "observed": "automatic_allow"},
+    "sandbox": {"requested": "unrestricted_host_access", "declared": "unrestricted_host_access", "observed": "unknown"},
+    "filesystem": {"workspace_root_id": "workspace", "access_policy": {"requested": {"os_capability": "read_write_all_test_roots", "user_authorization_scope": ["workspace"]}, "declared": "unrestricted_host_access", "observed": "unknown"}, "command_policy": {"requested": "automatic_allow", "declared": "automatic_allow", "observed": "unknown"}},
+    "network": {"requested": "enabled", "declared": "enabled", "observed": "unknown"},
+    "environment_variables": {"capture": "names_and_hashes_only"}
+  },
+  "capture": {
+    "mode": "manual",
+    "storage_policy": {"inline_max_bytes": 4096, "hash_algorithm": "sha256", "artifact_layout": "sha256/<prefix2>/<digest>"},
+    "root_bindings": [{"root_id": "workspace", "native_path": "REPLACE_WORKSPACE_PATH", "path_flavor": "windows", "case_sensitive": false, "follow_symlinks": false, "resolved_from": "${WORKSPACE}", "verification": {"method": "operator_checked", "confidence": "unknown"}}],
+    "collectors": [
+      {"collector_id": "manual_fs", "kind": "filesystem_snapshot", "enabled": true, "settings": {"hash_algorithm": "sha256"}},
+      {"collector_id": "manual_screen", "kind": "screenshot", "enabled": true, "settings": {}}
+    ],
+    "reasoning": {"strategy": "capture_product_visible_output_only", "preserve_verbatim": true},
+    "redaction": {"policy_id": "REPLACE_POLICY_ID"}
+  },
+  "fixture_deployment": {
+    "deployment_id": "REPLACE_DEPLOYMENT_ID",
+    "case_id": "REPLACE_CASE_ID",
+    "deployed_at": "2026-01-01T00:00:00.000Z",
+    "root_path": "REPLACE_DEPLOYMENT_ROOT",
+    "manifest_path": "REPLACE_DEPLOYMENT_MANIFEST_PATH",
+    "cleanup_marker_path": "REPLACE_CLEANUP_MARKER_PATH",
+    "package_version": "1.0.0"
+  }
+}

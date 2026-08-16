@@ -1,0 +1,89 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  leak-scan:
+    # Cheap, and the one failure that must never be merged: it means
+    # operator- or site-specific data is about to become public.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/scan-leaks.mjs .
+
+  case-library:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install workbench dependencies
+        working-directory: apps/workbench
+        run: pnpm install --frozen-lockfile
+
+      # Fixture digests are what make a Case reproducible. If editing lure
+      # content did not come with a refresh, the Case would fail to deploy on
+      # someone else's machine — catch it here instead.
+      - name: Fixture digests are current
+        run: |
+          node tools/refresh-fixture-hashes.mjs
+          git diff --exit-code -- case-library || {
+            echo "::error::fixture digests are stale — run node tools/refresh-fixture-hashes.mjs"
+            exit 1
+          }
+
+      - name: Validate every case.json against the AETF schema
+        working-directory: apps/workbench
+        run: pnpm validate:cases
+
+      - name: Case index is in sync with the library
+        working-directory: apps/workbench
+        run: |
+          pnpm sync:cases
+          git diff --exit-code -- lib/generated-case-library.json || {
+            echo "::error::generated-case-library.json is stale — run pnpm sync:cases"
+            exit 1
+          }
+
+      - name: Validate the workbench model
+        working-directory: apps/workbench
+        run: pnpm validate:workbench
+
+  run-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install jsonschema
+      - name: Validate the example run package
+        run: python tools/validate_run.py spec/examples/example-run
+
+  showcase:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # No run store on CI, so build-data would rebuild Cases only and drop
+      # every published trace. Check the committed snapshot as it stands.
+      - name: Check the published snapshot
+        working-directory: apps/showcase
+        run: node scripts/check.mjs
+      - name: The static site builds
+        working-directory: apps/showcase
+        run: node scripts/build-site.mjs

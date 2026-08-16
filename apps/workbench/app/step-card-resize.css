@@ -1,0 +1,63 @@
+.step-card-frame {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  justify-self: start;
+}
+
+.step-card-frame.is-resized {
+  overflow: auto;
+  min-width: min(360px, 100%);
+  min-height: 150px;
+  max-height: 760px;
+  border-radius: 10px;
+}
+
+.step-card-frame > .step-card {
+  width: 100%;
+  min-height: 100%;
+}
+
+.step-card-resize-handle {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  z-index: 4;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, .9);
+  cursor: nwse-resize;
+  touch-action: none;
+}
+
+.step-card-resize-handle::before,
+.step-card-resize-handle::after,
+.step-card-resize-handle span {
+  content: "";
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  height: 1px;
+  background: #718078;
+  transform: rotate(-45deg);
+  transform-origin: right center;
+}
+
+.step-card-resize-handle::before { width: 13px; }
+.step-card-resize-handle::after { width: 9px; }
+.step-card-resize-handle span { width: 5px; }
+
+.step-card-resize-handle:hover,
+.step-card-resize-handle:focus-visible {
+  background: var(--green-soft);
+  outline: 2px solid #8ca997;
+}
+
+.is-resizing-step-card,
+.is-resizing-step-card * {
+  cursor: nwse-resize !important;
+  user-select: none !important;
+}

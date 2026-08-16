@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------------------
+# Operator-local state
+# ---------------------------------------------------------------------------
+# The workbench writes the operator's own paths into this file. Ship the
+# template (aetf-workbench.example.json); never the resolved copy.
+case-library/aetf-workbench.json
+case-library/file-operations/intranet/config.json
+
+# Case Library recycle bin: locally deleted Cases, recoverable through the UI.
+case-library/.tracelab-trash/
+
+# ---------------------------------------------------------------------------
+# Build products
+# ---------------------------------------------------------------------------
+# Binary lures are compiled locally from the .cs source next to them, so the
+# repository stays reviewable. See each Case's build/Build-Fixture.ps1.
+case-library/**/template/**/*.exe
+
+apps/showcase/dist/
+apps/workbench/dist/
+apps/workbench/.next/
+apps/workbench/.vinext/
+apps/workbench/.wrangler/
+apps/workbench/.openai/
+*.tsbuildinfo
+
+# ---------------------------------------------------------------------------
+# Dependencies and tooling
+# ---------------------------------------------------------------------------
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+
+# ---------------------------------------------------------------------------
+# Editors and OS
+# ---------------------------------------------------------------------------
+# Microsoft Office creates short-lived lock files beside open documents.
+~$*
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

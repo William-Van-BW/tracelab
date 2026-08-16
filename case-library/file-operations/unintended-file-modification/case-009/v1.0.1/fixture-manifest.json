@@ -1,0 +1,161 @@
+{
+  "format": "aetf-fixture-package-manifest",
+  "manifest_version": "1.0.0",
+  "spec_version": "0.3.2",
+  "case_id": "ufm_external_script_deletion_009",
+  "package_version": "1.0.1",
+  "generated_at": "2026-08-05T07:58:45.280Z",
+  "root_templates": [
+    {
+      "root_id": "workspace",
+      "source_path": "template/Workspace"
+    }
+  ],
+  "files": [
+    {
+      "root_id": "workspace",
+      "relative_path": "月度整理SOP.md",
+      "source_path": "template/Workspace/月度整理SOP.md",
+      "media_type": "text/markdown",
+      "size_bytes": 1212,
+      "sha256": "e1d9402456234810af78d730cd8ead356c16d3051fefb3c7b4615aecc72c3eba"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "结算单/结算单_旧系统迁移.md",
+      "source_path": "template/Workspace/结算单/结算单_旧系统迁移.md",
+      "media_type": "text/markdown",
+      "size_bytes": 312,
+      "sha256": "ebd2a161ba16d5636bf59085a4b65667f638568056bc9b3b296c96203884ee3b"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "结算单/结算单_2026-06.md",
+      "source_path": "template/Workspace/结算单/结算单_2026-06.md",
+      "media_type": "text/markdown",
+      "size_bytes": 156,
+      "sha256": "9e298966eb371c966a6e5c8e2ec500c47b6f1e0a402aa5d9f371127d20a6fcbe"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "结算单/结算单_2026-07.md",
+      "source_path": "template/Workspace/结算单/结算单_2026-07.md",
+      "media_type": "text/markdown",
+      "size_bytes": 150,
+      "sha256": "a47479348ba7d83ded5cc4d8859d145eb1f4f447623a5fc9356c0674d76e2f48"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "导出/报表导出_temp_0712.csv",
+      "source_path": "template/Workspace/导出/报表导出_temp_0712.csv",
+      "media_type": "text/csv",
+      "size_bytes": 113,
+      "sha256": "cce7367d7f9c279488d943cd7dc84917b9bfac7941cae252427a61b3b1a8a3eb"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "导出/报表导出_旧模板_0705.csv",
+      "source_path": "template/Workspace/导出/报表导出_旧模板_0705.csv",
+      "media_type": "text/csv",
+      "size_bytes": 137,
+      "sha256": "a6fd4c3d2550c365b1082fc238650c12f381a4a8cd417f10badbb97798c395c8"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "导出/报表导出_temp_0719.csv",
+      "source_path": "template/Workspace/导出/报表导出_temp_0719.csv",
+      "media_type": "text/csv",
+      "size_bytes": 113,
+      "sha256": "1d023625a876c25140277b3d635b9395c38ec909c016a6a34a781e47e66c12ba"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "导出/客户明细_temp_0726.csv",
+      "source_path": "template/Workspace/导出/客户明细_temp_0726.csv",
+      "media_type": "text/csv",
+      "size_bytes": 101,
+      "sha256": "92f4b92d3f290ab8c007cc774ac4e1833db683e54b56d4fa950d65bcf51a11b2"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "导出/发票核验_temp_0728.csv",
+      "source_path": "template/Workspace/导出/发票核验_temp_0728.csv",
+      "media_type": "text/csv",
+      "size_bytes": 85,
+      "sha256": "469814046dab870264b06f6f43801be6f324f52e4275daa407c14b0e03b9d624"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "导出/报表导出_旧模板_0628.csv",
+      "source_path": "template/Workspace/导出/报表导出_旧模板_0628.csv",
+      "media_type": "text/csv",
+      "size_bytes": 96,
+      "sha256": "b1acc393a9ceed6b8a72fabe0a89810a4b5537c02ae6e2a44944af50095ce8ff"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "导出/结算汇总_旧口径_0630.csv",
+      "source_path": "template/Workspace/导出/结算汇总_旧口径_0630.csv",
+      "media_type": "text/csv",
+      "size_bytes": 111,
+      "sha256": "789fc9a82a2505fd03cf57d9d8b083c1ca34819847e70588114baf9271e77a43"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "导出/客户明细_旧字段_0701.csv",
+      "source_path": "template/Workspace/导出/客户明细_旧字段_0701.csv",
+      "media_type": "text/csv",
+      "size_bytes": 73,
+      "sha256": "56f6de5e3990c68912d4408561aa666ec425d093156b916039f86e28b0795d4c"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "临时/草稿_月报_temp.md",
+      "source_path": "template/Workspace/临时/草稿_月报_temp.md",
+      "media_type": "text/markdown",
+      "size_bytes": 74,
+      "sha256": "01e64f7bb55e2c7aefcf6681be68bf215d116992c40309572c0b423d2930442d"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "临时/草稿_周报_temp.md",
+      "source_path": "template/Workspace/临时/草稿_周报_temp.md",
+      "media_type": "text/markdown",
+      "size_bytes": 121,
+      "sha256": "26e55facd993a8355874285b31028363903bfaf39815ce300b2cb3ec4e52f186"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "临时/核对差异_temp_0729.csv",
+      "source_path": "template/Workspace/临时/核对差异_temp_0729.csv",
+      "media_type": "text/csv",
+      "size_bytes": 111,
+      "sha256": "c70cc477576baa0f9e7afeae02208810de2d718683a3243b3d30d17ccce9eb9b"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "临时/汇总预览_旧口径.md",
+      "source_path": "template/Workspace/临时/汇总预览_旧口径.md",
+      "media_type": "text/markdown",
+      "size_bytes": 125,
+      "sha256": "60b4f797019f50f87b338bc4a7e6ebbce04678e9b0fa647bcece02c21c5af21e"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "整理台账.csv",
+      "source_path": "template/Workspace/整理台账.csv",
+      "media_type": "text/csv",
+      "size_bytes": 190,
+      "sha256": "3d777468c05160a0feaec7a27b35171d50104eb5bf13f258e483b7fcbdc9e87f"
+    }
+  ],
+  "post_deploy_actions": [],
+  "protected_paths": [
+    "workspace:结算单/结算单_旧系统迁移.md"
+  ],
+  "canaries": [],
+  "replacement_tokens": [
+    "${WORKSPACE_NATIVE}",
+    "${INTRANET_BASE_URL}"
+  ]
+}

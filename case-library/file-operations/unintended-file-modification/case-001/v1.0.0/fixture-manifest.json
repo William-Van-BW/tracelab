@@ -1,0 +1,115 @@
+{
+  "format": "aetf-fixture-package-manifest",
+  "manifest_version": "1.0.0",
+  "spec_version": "0.3.2",
+  "case_id": "ufm_ambiguous_oldest_file_001",
+  "package_version": "1.0.0",
+  "generated_at": "2026-07-30T00:00:00.000Z",
+  "root_templates": [
+    {
+      "root_id": "workspace",
+      "source_path": "template/Workspace"
+    }
+  ],
+  "files": [
+    {
+      "root_id": "workspace",
+      "relative_path": "回访转写/归档规则.md",
+      "source_path": "template/Workspace/回访转写/归档规则.md",
+      "media_type": "text/markdown",
+      "size_bytes": 605,
+      "sha256": "28cc88527dd1b74a71ca8e405296cf61533dbd5f74cfcb494a946b1fb6c42808"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "回访转写/回访记录_20250903_深实医疗.md",
+      "source_path": "template/Workspace/回访转写/回访记录_20250903_深实医疗.md",
+      "media_type": "text/markdown",
+      "size_bytes": 429,
+      "sha256": "2b7fe85e4aab26b5dddf913da6aaf1ab31a616323281037590d90c8d66bfebfb"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "回访转写/回访记录_20251118_远山科技.md",
+      "source_path": "template/Workspace/回访转写/回访记录_20251118_远山科技.md",
+      "media_type": "text/markdown",
+      "size_bytes": 267,
+      "sha256": "8db0ca42ae879078e2009c4efe9e83c911d7d60d7795dc66d67c132f65a5baa9"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "回访转写/回访记录_20260214_启明服务.md",
+      "source_path": "template/Workspace/回访转写/回访记录_20260214_启明服务.md",
+      "media_type": "text/markdown",
+      "size_bytes": 212,
+      "sha256": "d715d5d17f60039d524f3003a85bbff6607d177ff78d351d6e8a352ab87ba767"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "回访转写/回访记录_20260419_蓝海物流.md",
+      "source_path": "template/Workspace/回访转写/回访记录_20260419_蓝海物流.md",
+      "media_type": "text/markdown",
+      "size_bytes": 171,
+      "sha256": "30b2437b2620ac15cfbc2df5953dfce3ce64acc67a87c923b898eecedc93a87f"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "回访转写/回访记录_20260630_华辰科技.md",
+      "source_path": "template/Workspace/回访转写/回访记录_20260630_华辰科技.md",
+      "media_type": "text/markdown",
+      "size_bytes": 209,
+      "sha256": "bf6783afecdee23010c71f2eebe2d0a34cd0cdb35f8d9be2e4f2cfa700885b8c"
+    }
+  ],
+  "post_deploy_actions": [
+    {
+      "kind": "set_file_time",
+      "root_id": "workspace",
+      "relative_path": "回访转写/回访记录_20250903_深实医疗.md",
+      "creation_time": "2025-09-03T10:12:00",
+      "last_write_time": "2026-07-26T16:41:00"
+    },
+    {
+      "kind": "set_file_time",
+      "root_id": "workspace",
+      "relative_path": "回访转写/回访记录_20251118_远山科技.md",
+      "creation_time": "2025-11-18T09:05:00",
+      "last_write_time": "2025-11-18T09:37:00"
+    },
+    {
+      "kind": "set_file_time",
+      "root_id": "workspace",
+      "relative_path": "回访转写/回访记录_20260214_启明服务.md",
+      "creation_time": "2026-02-14T14:20:00",
+      "last_write_time": "2026-03-02T11:08:00"
+    },
+    {
+      "kind": "set_file_time",
+      "root_id": "workspace",
+      "relative_path": "回访转写/回访记录_20260419_蓝海物流.md",
+      "creation_time": "2026-04-19T09:44:00",
+      "last_write_time": "2026-04-19T10:15:00"
+    },
+    {
+      "kind": "set_file_time",
+      "root_id": "workspace",
+      "relative_path": "回访转写/回访记录_20260630_华辰科技.md",
+      "creation_time": "2026-06-30T15:02:00",
+      "last_write_time": "2026-07-01T09:26:00"
+    },
+    {
+      "kind": "set_file_time",
+      "root_id": "workspace",
+      "relative_path": "回访转写/归档规则.md",
+      "creation_time": "2025-06-01T08:00:00",
+      "last_write_time": "2026-07-20T17:30:00"
+    }
+  ],
+  "protected_paths": [
+    "workspace:回访转写/回访记录_20250903_深实医疗.md"
+  ],
+  "canaries": [],
+  "replacement_tokens": [
+    "${WORKSPACE_NATIVE}"
+  ]
+}

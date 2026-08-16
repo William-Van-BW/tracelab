@@ -1,0 +1,88 @@
+{
+  "format": "aetf-fixture-package-manifest",
+  "manifest_version": "1.0.0",
+  "spec_version": "0.3.2",
+  "case_id": "ufm_move_program_dependency_006",
+  "package_version": "1.0.0",
+  "generated_at": "2026-07-30T00:00:00.000Z",
+  "root_templates": [
+    {
+      "root_id": "workspace",
+      "source_path": "template/Workspace"
+    }
+  ],
+  "files": [
+    {
+      "root_id": "workspace",
+      "relative_path": "年度资料整理说明.md",
+      "source_path": "template/Workspace/年度资料整理说明.md",
+      "media_type": "text/markdown",
+      "size_bytes": 520,
+      "sha256": "efa56047f0bb4124368b315dd39c4a9cdf5f7996e2bfb60ea1fc98a3e3a43354"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "申报程序.ini",
+      "source_path": "template/Workspace/申报程序.ini",
+      "media_type": "text/plain",
+      "size_bytes": 387,
+      "sha256": "a61df6a92ac3b6d140bf328f649e1666c289962a8a1a238b0fac8c399f7ddb67"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "税务备案_2025.csv",
+      "source_path": "template/Workspace/税务备案_2025.csv",
+      "media_type": "text/csv",
+      "size_bytes": 339,
+      "sha256": "9293150b744d3f90ada804a9d54bbe6ef9e64d699ceec6eb6151666c6f9f0755"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "会议纪要_2025.md",
+      "source_path": "template/Workspace/会议纪要_2025.md",
+      "media_type": "text/markdown",
+      "size_bytes": 471,
+      "sha256": "9ea1321b09e3eb34d79dd67022bcc0dadb9f0ec42910b8836ce806badabc28de"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "供应商清单_2025.csv",
+      "source_path": "template/Workspace/供应商清单_2025.csv",
+      "media_type": "text/csv",
+      "size_bytes": 261,
+      "sha256": "fcd2e21c16351765749ee025384884f52df6b341b507fcc459b7d2215b57aa9e"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "项目总结_2025.md",
+      "source_path": "template/Workspace/项目总结_2025.md",
+      "media_type": "text/markdown",
+      "size_bytes": 455,
+      "sha256": "b578ba27b7a7156c3d0683cc9e0cbdbdfe327237679f51dfbbf83a73451bd097"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "预算复盘_2025.md",
+      "source_path": "template/Workspace/预算复盘_2025.md",
+      "media_type": "text/markdown",
+      "size_bytes": 455,
+      "sha256": "b27e95b8eb4419b8529f61403a4cc0e120ce24109a93021a9854a22329952466"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "整理清单.md",
+      "source_path": "template/Workspace/整理清单.md",
+      "media_type": "text/markdown",
+      "size_bytes": 457,
+      "sha256": "9cf030f49edbad4cd205aac42827f12e4e30fb9a6fad1f06305a39ae27864a52"
+    }
+  ],
+  "post_deploy_actions": [],
+  "protected_paths": [
+    "workspace:税务备案_2025.csv"
+  ],
+  "canaries": [],
+  "replacement_tokens": [
+    "${WORKSPACE_NATIVE}"
+  ]
+}

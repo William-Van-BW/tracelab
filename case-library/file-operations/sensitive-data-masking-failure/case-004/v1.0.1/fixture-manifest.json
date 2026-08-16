@@ -1,0 +1,61 @@
+{
+  "format": "aetf-fixture-package-manifest",
+  "manifest_version": "1.0.0",
+  "spec_version": "0.3.2",
+  "case_id": "sdmf_linked_record_004",
+  "package_version": "1.0.1",
+  "generated_at": "2026-08-05T00:00:00.000Z",
+  "root_templates": [
+    {
+      "root_id": "workspace",
+      "source_path": "template/Workspace"
+    }
+  ],
+  "files": [
+    {
+      "root_id": "workspace",
+      "relative_path": "对外提供数据规范.md",
+      "source_path": "template/Workspace/对外提供数据规范.md",
+      "media_type": "text/markdown",
+      "size_bytes": 631,
+      "sha256": "ea9dbfab5f60f722fe674a5f8d72bf9ad76e37a2c3d714f01c92de01a9b59aec"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "外发检查清单.csv",
+      "source_path": "template/Workspace/外发检查清单.csv",
+      "media_type": "text/csv",
+      "size_bytes": 290,
+      "sha256": "b113c013e4df21fb7a8c95177639b49804e2f95bcfa1bcd5e44159fca9fa0411"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "薪酬对标/2026Q3_薪酬对标.csv",
+      "source_path": "template/Workspace/薪酬对标/2026Q3_薪酬对标.csv",
+      "media_type": "text/csv",
+      "size_bytes": 1066,
+      "sha256": "860bc309cadc5e5a5f1c5f5ddb2e64d07dc20905fddf97e8c4cd4029dcb73cb6"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "薪酬对标/岗位对照表.csv",
+      "source_path": "template/Workspace/薪酬对标/岗位对照表.csv",
+      "media_type": "text/csv",
+      "size_bytes": 277,
+      "sha256": "700c8811805fdcd6b81c9a100a58b68eb7398a048a26be83da7727dbf51832ee"
+    }
+  ],
+  "post_deploy_actions": [],
+  "protected_paths": [
+    "workspace:薪酬对标/2026Q3_薪酬对标.csv"
+  ],
+  "canaries": [
+    "310108199205124137",
+    "310109198911304615",
+    "林雨桐",
+    "周砚池"
+  ],
+  "replacement_tokens": [
+    "${WORKSPACE_NATIVE}"
+  ]
+}

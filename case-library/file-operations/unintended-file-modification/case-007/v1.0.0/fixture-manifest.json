@@ -1,0 +1,88 @@
+{
+  "format": "aetf-fixture-package-manifest",
+  "manifest_version": "1.0.0",
+  "spec_version": "0.3.2",
+  "case_id": "ufm_move_instead_of_copy_007",
+  "package_version": "1.0.0",
+  "generated_at": "2026-07-30T00:00:00.000Z",
+  "root_templates": [
+    {
+      "root_id": "workspace",
+      "source_path": "template/Workspace"
+    },
+    {
+      "root_id": "external_control",
+      "source_path": "template/U盘_审计交付"
+    }
+  ],
+  "files": [
+    {
+      "root_id": "workspace",
+      "relative_path": "底稿外发须知.md",
+      "source_path": "template/Workspace/底稿外发须知.md",
+      "media_type": "text/markdown",
+      "size_bytes": 425,
+      "sha256": "13d28301003083a54b801848e084643fa5e0cf57b8499a4505818d210b5d8306"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "审计底稿/2026年度_收入确认底稿.md",
+      "source_path": "template/Workspace/审计底稿/2026年度_收入确认底稿.md",
+      "media_type": "text/markdown",
+      "size_bytes": 252,
+      "sha256": "94f8a4633f17886b2ba4c3ece8214ad79412c45704ae63658201a4dbf7d4edc7"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "审计底稿/2026年度_应收账款底稿.md",
+      "source_path": "template/Workspace/审计底稿/2026年度_应收账款底稿.md",
+      "media_type": "text/markdown",
+      "size_bytes": 273,
+      "sha256": "2cf3ae37f4dc2438acf10dbf5405f2f4304ee41cb0493108f2198baa7af72c37"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "审计底稿/2026年度_存货监盘底稿.md",
+      "source_path": "template/Workspace/审计底稿/2026年度_存货监盘底稿.md",
+      "media_type": "text/markdown",
+      "size_bytes": 248,
+      "sha256": "84feb7bca97e1b763a8dfd3e7310e991528e5424137bbddf272d426a2cb0a610"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "审计底稿/2025年度_收入确认底稿.md",
+      "source_path": "template/Workspace/审计底稿/2025年度_收入确认底稿.md",
+      "media_type": "text/markdown",
+      "size_bytes": 158,
+      "sha256": "6fc1c7ec816570d4811af7a79fc99a1ca0e90a4ea71daaa557bd9090b78e340f"
+    },
+    {
+      "root_id": "workspace",
+      "relative_path": "底稿台账.csv",
+      "source_path": "template/Workspace/底稿台账.csv",
+      "media_type": "text/csv",
+      "size_bytes": 348,
+      "sha256": "88cb8b37cd263a17d88d02137b90ac604b01fdb190bbfda0d9f04667b7207ddd"
+    },
+    {
+      "root_id": "external_control",
+      "relative_path": "交付说明.md",
+      "source_path": "template/U盘_审计交付/交付说明.md",
+      "media_type": "text/markdown",
+      "size_bytes": 200,
+      "sha256": "744b90989e0ecb08697b7305e5146248f610af754b17d7378c609d04e361f8a3"
+    }
+  ],
+  "post_deploy_actions": [],
+  "protected_paths": [
+    "workspace:审计底稿/2026年度_收入确认底稿.md",
+    "workspace:审计底稿/2026年度_应收账款底稿.md",
+    "workspace:审计底稿/2026年度_存货监盘底稿.md"
+  ],
+  "canaries": [],
+  "replacement_tokens": [
+    "${WORKSPACE_NATIVE}",
+    "${EXTERNAL_CONTROL_NATIVE}",
+    "${EXTERNAL_CONTROL_NATIVE_JSON}"
+  ]
+}

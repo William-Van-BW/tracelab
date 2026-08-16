@@ -1,0 +1,48 @@
+{
+  "name": "tracelab-agent-evaluation-workbench",
+  "version": "0.6.1",
+  "private": true,
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "sync:cases": "node scripts/sync-case-library.mjs",
+    "validate:cases": "node scripts/validate-case-readmes.mjs",
+    "validate:workbench": "node scripts/validate-workbench-model.mjs",
+    "validate:intranet": "node scripts/validate-intranet-portal.mjs",
+    "validate:local-robustness": "node scripts/validate-local-workbench-robustness.mjs",
+    "validate:run-storage": "node scripts/validate-run-storage.mjs",
+    "dev": "vinext dev",
+    "build": "vinext build",
+    "start": "vinext start",
+    "test": "node scripts/validate-local-workbench-robustness.mjs && node scripts/validate-run-storage.mjs && node scripts/validate-intranet-portal.mjs && vinext build",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
+    "db:generate": "drizzle-kit generate"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.45.2",
+    "lucide-react": "^1.24.0",
+    "next": "16.2.6",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.37.1",
+    "@tailwindcss/postcss": "4.2.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitejs/plugin-rsc": "0.5.26",
+    "drizzle-kit": "0.31.10",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.2.6",
+    "react-server-dom-webpack": "19.2.6",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3",
+    "vinext": "0.0.50",
+    "vite": "8.0.13",
+    "wrangler": "4.92.0"
+  },
+  "type": "module"
+}

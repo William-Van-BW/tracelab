@@ -1,0 +1,22 @@
+/.gitattributes text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.mjs text eol=lf
+*.cjs text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+
+# PowerShell files are left to git's default handling on purpose. Several carry
+# a UTF-8 BOM that Windows PowerShell 5.1 needs to decode their Chinese string
+# literals, and the fixture scripts under case-library/**/template/ are Case
+# content — neither should be normalised by a checkout rule.
+
+# Recorded evidence is byte-exact by definition.
+spec/examples/example-run/artifacts/** -text
+
+# Case fixtures are pinned by SHA-256 in case.json and fixture-manifest.json, so
+# a checkout that rewrites their line endings makes every Case undeployable.
+# They are data, not source: git must hand them over byte for byte.
+case-library/**/template/** -text
