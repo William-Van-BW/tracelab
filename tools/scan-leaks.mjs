@@ -31,8 +31,8 @@ const ALLOW = [
   /^C:[\\/]{1,2}Users[\\/]{1,2}operator/,
   /^C:[\\/]{1,2}Users[\\/]{1,2}\.{2,}$/,            // an Agent writing "C:\Users\..." in prose
   /^(?:10\.0\.0\.0|172\.16\.0\.0|192\.168\.0\.0|10\.20\.30\.40)$/,
-  /^git@github\.com$/,                               // the clone URL in the docs
-  /^25213050366@m\.fudan\.edu\.cn$/,                 // maintainer contact, published on purpose
+  /^git@github\.com$/,                                        // the clone URL in the docs
+  /^(?:ghong|xh_zhang)@fudan\.edu\.cn$/,                       // maintainer contacts, published on purpose
 ];
 
 const hits = new Map();

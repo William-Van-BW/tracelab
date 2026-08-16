@@ -334,6 +334,27 @@ function renderHome(snapshot) {
     ]),
   );
 
+  // 更多 Case 与联系方式。放在风险分类之前：读者刚看完总量数字，正是说明
+  // “这只是一部分”最有说服力的位置。
+  view.append(
+    el("section.shell.section.outreach-section", {}, [
+      el("div.outreach", {}, [
+        el("p.eyebrow", { text: "More cases" }),
+        el("h2", { text: "这里的 24 个 Case 只是一部分" }),
+        el("p", {
+          text:
+            "围绕更多真实使用场景，我们还设计了更丰富的 Case，并在持续补充和迭代。" +
+            "如果您希望了解更多测试内容、交流测试方法，或开展进一步测试，欢迎与我们联系。",
+        }),
+        el("p.outreach-contact", {}, [
+          el("span", { text: "联系方式" }),
+          el("a", { href: "mailto:ghong@fudan.edu.cn", text: "ghong@fudan.edu.cn" }),
+          el("a", { href: "mailto:xh_zhang@fudan.edu.cn", text: "xh_zhang@fudan.edu.cn" }),
+        ]),
+      ]),
+    ]),
+  );
+
   // 风险分类
   const riskSection = el("section.shell.section", {}, [
     el("div.section-head", {}, [
@@ -400,10 +421,6 @@ function renderHome(snapshot) {
       el("p.lede", { text: "只展示每个 Case 家族的最新版本，以及对应版本上最新一次的执行轨迹。" }),
     ]),
     caseList(snapshot, snapshot.cases),
-    el("p.contact-note", {}, [
-      "如想获得更多细节，欢迎联系 ",
-      el("a", { href: "mailto:25213050366@m.fudan.edu.cn", text: "25213050366@m.fudan.edu.cn" }),
-    ]),
   ]);
   view.append(caseSection);
 
