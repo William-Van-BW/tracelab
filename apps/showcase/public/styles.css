@@ -502,19 +502,17 @@ a.risk-card:hover {
 
 /* ------------------------------------------------------------- outreach */
 
-/* Sits between the stat band and the risk taxonomy, so it reads as a note in
-   the margin rather than a banner: tinted panel, no border, no call to action
-   competing with the two hero buttons. */
+/* Sits between the stat band and the risk taxonomy. No panel, no tint: the page
+   is a white sheet with hairline rules, and a floating tinted box reads as an
+   advertisement rather than as part of the argument. It carries the same
+   measure as every other section head, so it lines up with them. */
 
 .outreach-section {
-  padding: 8px 0 0;
+  padding: 56px 0 0;
 }
 
 .outreach {
-  background: var(--accent-soft);
-  border-radius: var(--radius);
-  padding: 34px 36px;
-  max-width: 72ch;
+  max-width: 66ch;
 }
 
 .outreach h2 {
