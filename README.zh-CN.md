@@ -71,8 +71,13 @@ apps/showcase/         已发布的站点
 需要 Windows（Case 依赖 Windows 文件系统语义）、Node.js 22.13+、PowerShell 5.1 及以上。
 
 ```bash
+git config --global core.longpaths true   # Windows 上先执行一次
 git clone https://github.com/William-Van-BW/tracelab.git
 ```
+
+Case 夹具是层级较深的中文办公目录，checkout 时容易超过 Windows 260 字符的路径上限。
+没开 `core.longpaths` 时，`git clone` 会报 “Filename too long”，工作区是残缺的。
+clone 到短路径（例如 `C:\tracelab`）也能缓解。
 
 只想看 Case 设计和已记录的轨迹——不装依赖、不起开发服务：
 

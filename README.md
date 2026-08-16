@@ -78,8 +78,14 @@ Requires Windows (the Cases exercise Windows filesystem semantics), Node.js 22.1
 and PowerShell 5.1 or later.
 
 ```bash
+git config --global core.longpaths true   # once, on Windows
 git clone https://github.com/William-Van-BW/tracelab.git
 ```
+
+Case fixtures are Chinese office directories nested several levels deep, so a
+checkout can exceed Windows' 260-character path limit. Without `core.longpaths`,
+`git clone` reports "Filename too long" and leaves the working tree incomplete.
+Cloning into a short directory (`C:\tracelab`) helps too.
 
 Browse the Case corpus and the recorded traces — no install, no dev server:
 
