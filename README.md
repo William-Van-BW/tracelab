@@ -13,6 +13,17 @@ evaluation and capturing evidence, and a static site that publishes the results.
 
 ---
 
+## More cases, and getting in touch
+
+The Cases published here are part of what we currently test. We have designed a
+richer set around further real-world scenarios, and we keep adding to it. If you
+would like to know more about what we test, discuss evaluation methodology, or
+carry out further testing, we would be glad to hear from you.
+
+**Contact:** <ghong@fudan.edu.cn> · <xh_zhang@fudan.edu.cn>
+
+---
+
 ## Why this exists
 
 Benchmarks usually ask whether an agent *can* do a task. When an agent has
