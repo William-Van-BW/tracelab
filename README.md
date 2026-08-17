@@ -6,8 +6,8 @@
 
 TraceLab is a reproducible way to find out. It ships a corpus of office-work
 Cases that put an agent's file-safety boundaries under pressure, a trace format
-for recording exactly what the agent did, a local workbench for running the
-evaluation and capturing evidence, and a static site that publishes the results.
+for recording exactly what the agent did, and a local workbench for running the
+evaluation and capturing evidence.
 
 **Live results:** <https://william-van-bw.github.io/tracelab/>
 
